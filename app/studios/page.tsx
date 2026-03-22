@@ -1,7 +1,6 @@
-export default function Studios() {
-  return (
-    <main>
-      <h1>Studios</h1>
-    </main>
-  )
+import { defaultLocale } from "@/lib/i18n";
+import { redirect } from "next/navigation";
+
+export default function StudiosRedirect() {
+  redirect(`/${defaultLocale}/studios`);
 }

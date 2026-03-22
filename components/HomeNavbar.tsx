@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Button from '@/components/ui/Button'
+import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function HomeNavbar() {
   return (
@@ -14,9 +14,11 @@ export default function HomeNavbar() {
 
         <div className="flex items-center gap-2">
           <Button variant="ghost">Sign in</Button>
-          <Button variant="primary" href="/games">Explore</Button>
+          <Button variant="primary">
+            <Link href="/games">Explore</Link>
+          </Button>
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -8,7 +8,8 @@
  * @module
  */
 
-import type * as categories from "../categories.js";
+import type * as games from "../games.js";
+import type * as studios from "../studios.js";
 
 import type {
   ApiFromModules,
@@ -17,7 +18,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
-  categories: typeof categories;
+  games: typeof games;
+  studios: typeof studios;
 }>;
 
 /**
