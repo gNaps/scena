@@ -14,10 +14,18 @@ type Studio = {
   _id: string;
   name: string;
   location: string;
+  slug?: string;
   coordinates: { lat: number; lng: number };
+  logoUrl: string | null;
 };
 
-function ClusterLayer({ studios }: { studios: Studio[] }) {
+function ClusterLayer({
+  studios,
+  locale,
+}: {
+  studios: Studio[];
+  locale: string;
+}) {
   const map = useMap();
 
   useEffect(() => {
@@ -62,34 +70,49 @@ function ClusterLayer({ studios }: { studios: Studio[] }) {
     });
 
     studios.forEach((studio) => {
-      const marker = L.marker([studio.coordinates.lat, studio.coordinates.lng], { icon: pinIcon });
-      marker.bindPopup(`
-        <div style="
-          color:#ede9fe;background:#0d0d1a;
-          padding:6px 10px;border-radius:8px;
-          font-size:13px;font-weight:600;min-width:120px;
-        ">
-          ${studio.name}
-          <div style="color:#6b7280;font-weight:400;font-size:11px;margin-top:2px;">${studio.location}</div>
+      const marker = L.marker(
+        [studio.coordinates.lat, studio.coordinates.lng],
+        { icon: pinIcon },
+      );
+      const logoHtml = studio.logoUrl
+        ? `<img src="${studio.logoUrl}" alt="${studio.name}" style="width:40px;height:40px;border-radius:8px;object-fit:contain;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);padding:4px;flex-shrink:0;" />`
+        : `<div style="width:40px;height:40px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,rgba(139,92,246,0.4),rgba(34,211,238,0.4));border:1px solid rgba(255,255,255,0.1);"></div>`;
+      const nameHtml = studio.slug
+        ? `<a href="/studios/${studio.slug}" style="color:#ede9fe;font-size:13px;font-weight:600;line-height:1.3;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${studio.name}</a>`
+        : `<div style="color:#ede9fe;font-size:13px;font-weight:600;line-height:1.3;">${studio.name}</div>`;
+      marker.bindPopup(
+        `
+        <div style="display:flex;align-items:center;gap:10px;background:#0d0d1a;border-radius:12px;padding:10px 14px;min-width:170px;border:1px solid rgba(255,255,255,0.08);">
+          ${logoHtml}
+          <div>
+            ${nameHtml}
+            <div style="color:#6b7280;font-size:11px;margin-top:3px;">${studio.location}</div>
+          </div>
         </div>
-      `);
+      `,
+        { className: "studio-popup" },
+      );
       cluster.addLayer(marker);
     });
 
     map.addLayer(cluster);
-    return () => { map.removeLayer(cluster); };
+    return () => {
+      map.removeLayer(cluster);
+    };
   }, [map, studios]);
 
   return null;
 }
 
-export default function StudioMap() {
+export default function StudioMap({ locale }: { locale: string }) {
   const studios = useQuery(api.studios.findAllForMap) ?? [];
 
   return (
     <MapContainer
       center={[42.5, 12.5]}
-      zoom={6}
+      zoom={5}
+      minZoom={5}
+      maxZoom={14}
       scrollWheelZoom
       style={{ height: "100%", width: "100%", background: "#07070f" }}
     >
@@ -97,7 +120,7 @@ export default function StudioMap() {
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       />
-      <ClusterLayer studios={studios} />
+      <ClusterLayer studios={studios} locale={locale} />
     </MapContainer>
   );
 }

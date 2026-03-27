@@ -4,6 +4,6 @@ import dynamic from "next/dynamic";
 
 const StudioMap = dynamic(() => import("@/components/StudioMap"), { ssr: false });
 
-export default function StudioMapWrapper() {
-  return <StudioMap />;
+export default function StudioMapWrapper({ locale }: { locale: string }) {
+  return <StudioMap locale={locale} />;
 }

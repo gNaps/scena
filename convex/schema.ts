@@ -11,9 +11,9 @@ export default defineSchema({
       }),
     ),
     status: v.id("statuses"),
-    releaseTime: v.optional(v.string()),
-    expectedReleaseTime: v.optional(v.string()),
-    updateTime: v.optional(v.string()),
+    releaseTime: v.optional(v.number()),
+    expectedReleaseTime: v.optional(v.number()),
+    updateTime: v.optional(v.number()),
     studio: v.id("studios"),
     platforms: v.array(v.id("platforms")),
     genres: v.array(v.id("genres")),
@@ -33,14 +33,20 @@ export default defineSchema({
       ),
     ),
     screenshots: v.optional(v.array(v.id("_storage"))),
-    videos: v.optional(v.array(v.id("_storage"))),
+    cover: v.optional(v.id("_storage")),
+    videos: v.optional(v.array(v.string())),
     voice: v.optional(v.array(v.string())),
     screenLanguage: v.optional(v.array(v.string())),
-  }),
+    slug: v.optional(v.string()),
+  })
+    .searchIndex("search_title", { searchField: "title" })
+    .index("by_studio", ["studio"])
+    .index("by_slug", ["slug"]),
   studios: defineTable({
     name: v.string(),
     description: v.string(),
     location: v.string(),
+    region: v.optional(v.string()),
     coordinates: v.object({
       lat: v.number(),
       lng: v.number(),
@@ -60,7 +66,10 @@ export default defineSchema({
     email: v.string(),
     phoneNumber: v.optional(v.string()),
     updateTime: v.optional(v.string()),
-  }),
+    slug: v.optional(v.string()),
+  })
+    .searchIndex("search_name", { searchField: "name" })
+    .index("by_slug", ["slug"]),
   genres: defineTable({
     key: v.string(),
     languages: v.array(
@@ -78,6 +87,7 @@ export default defineSchema({
         name: v.string(),
       }),
     ),
+    color: v.optional(v.string()),
   }),
   platforms: defineTable({
     key: v.string(),

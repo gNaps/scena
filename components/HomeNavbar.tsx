@@ -13,7 +13,6 @@ export default function HomeNavbar() {
         </Link>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost">Sign in</Button>
           <Button variant="primary">
             <Link href="/games">Explore</Link>
           </Button>

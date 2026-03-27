@@ -9,6 +9,8 @@
  */
 
 import type * as games from "../games.js";
+import type * as genres from "../genres.js";
+import type * as statuses from "../statuses.js";
 import type * as studios from "../studios.js";
 
 import type {
@@ -19,6 +21,8 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   games: typeof games;
+  genres: typeof genres;
+  statuses: typeof statuses;
   studios: typeof studios;
 }>;
 
