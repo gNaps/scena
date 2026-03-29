@@ -19,7 +19,7 @@ export default async function Home({
 
   return (
     <>
-      <HomeNavbar />
+      <HomeNavbar locale={locale} />
       <main className="pt-16 overflow-hidden">
         {/* Hero */}
         <section className="relative flex flex-col items-center justify-center text-center px-6 py-36 md:py-48">

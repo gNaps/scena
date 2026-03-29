@@ -1,7 +1,6 @@
+import { redirect } from "next/navigation";
+import { defaultLocale } from "@/lib/i18n";
+
 export default function NewGame() {
-  return (
-    <main>
-      <h1>Add game</h1>
-    </main>
-  )
+  redirect(`/${defaultLocale}/games/new`);
 }

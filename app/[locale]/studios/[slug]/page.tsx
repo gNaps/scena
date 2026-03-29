@@ -40,7 +40,7 @@ export default function StudioDetailPage({
 
   return (
     <>
-    <HomeNavbar />
+    <HomeNavbar locale={locale} />
     <main className="pt-16 pb-24">
       {/* Header */}
       <div className="relative border-b border-white/10">

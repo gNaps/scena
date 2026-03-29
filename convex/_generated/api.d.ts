@@ -8,8 +8,11 @@
  * @module
  */
 
+import type * as emails from "../emails.js";
 import type * as games from "../games.js";
 import type * as genres from "../genres.js";
+import type * as languages from "../languages.js";
+import type * as platforms from "../platforms.js";
 import type * as statuses from "../statuses.js";
 import type * as studios from "../studios.js";
 
@@ -20,8 +23,11 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  emails: typeof emails;
   games: typeof games;
   genres: typeof genres;
+  languages: typeof languages;
+  platforms: typeof platforms;
   statuses: typeof statuses;
   studios: typeof studios;
 }>;

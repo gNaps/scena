@@ -10,7 +10,7 @@ export default clerkMiddleware((_auth, request) => {
       pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (!pathnameHasLocale) {
+  if (!pathnameHasLocale && !pathname.startsWith("/api/")) {
     const acceptLanguage = request.headers.get("accept-language") ?? "";
     const detected =
       locales.find((locale) =>

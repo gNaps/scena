@@ -1,7 +1,7 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { Doc } from "./_generated/dataModel";
-import { QueryCtx, query } from "./_generated/server";
+import { QueryCtx, query, mutation } from "./_generated/server";
 
 async function enrichGame(ctx: QueryCtx, game: Doc<"games">) {
   const [status, genres, platforms, studio, coverUrl, screenshotUrls] = await Promise.all([
@@ -125,5 +125,12 @@ export const findOne = query({
     const game = await ctx.db.get(args.id);
     if (!game) return null;
     return enrichGame(ctx, game);
+  },
+});
+
+export const generateUploadUrl = mutation({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.storage.generateUploadUrl();
   },
 });

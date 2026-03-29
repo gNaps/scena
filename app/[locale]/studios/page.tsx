@@ -12,7 +12,7 @@ export default async function StudiosPage({
 
   return (
     <>
-      <HomeNavbar />
+      <HomeNavbar locale={locale} />
       <main className="pt-16">
         <section className="px-6 py-12 max-w-6xl mx-auto">
           <div className="mb-8">

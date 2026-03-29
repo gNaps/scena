@@ -61,7 +61,7 @@ export default function GameDetailPage({
 
   return (
     <>
-      <HomeNavbar />
+      <HomeNavbar locale={locale} />
       <main className="pt-16 pb-24">
         {/* Hero cover */}
         <div className="relative w-full h-[40vh] md:h-[55vh] overflow-hidden">
