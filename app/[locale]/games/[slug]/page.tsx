@@ -4,9 +4,9 @@ import HomeNavbar from "@/components/HomeNavbar";
 import { api } from "@/convex/_generated/api";
 import { getLocalizedName, getLocalizedValue, t } from "@/lib/i18n";
 import { useQuery } from "convex/react";
-import { ArrowLeft, ExternalLink, Gamepad2, Globe } from "lucide-react";
+import { ArrowLeft, ExternalLink, Gamepad2, Globe, X } from "lucide-react";
 import Link from "next/link";
-import { use } from "react";
+import { use, useState } from "react";
 
 const PLATFORM_URLS: Record<string, { label: string; field: string }> = {
   urlSteam: { label: "Steam", field: "urlSteam" },
@@ -25,6 +25,7 @@ export default function GameDetailPage({
 }) {
   const { locale, slug } = use(params);
   const game = useQuery(api.games.findBySlug, { slug });
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
 
   if (game === undefined) {
     return (
@@ -160,19 +161,17 @@ export default function GameDetailPage({
                 </h2>
                 <div className="flex gap-3 overflow-x-auto pb-2 -mx-6 px-6 snap-x snap-mandatory">
                   {game.screenshotUrls.map((url, i) => (
-                    <a
+                    <button
                       key={i}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group/img block shrink-0 w-72 overflow-hidden rounded-xl border border-white/10 snap-start"
+                      onClick={() => setLightboxUrl(url)}
+                      className="group/img block shrink-0 w-72 overflow-hidden rounded-xl border border-white/10 snap-start cursor-zoom-in"
                     >
                       <img
                         src={url}
                         alt={`Screenshot ${i + 1}`}
                         className="w-full aspect-video object-cover transition-transform duration-500 group-hover/img:scale-105"
                       />
-                    </a>
+                    </button>
                   ))}
                 </div>
               </section>
@@ -265,6 +264,27 @@ export default function GameDetailPage({
           </div>
         </div>
       </main>
+
+      {/* Lightbox */}
+      {lightboxUrl && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
+          onClick={() => setLightboxUrl(null)}
+        >
+          <button
+            onClick={() => setLightboxUrl(null)}
+            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+          >
+            <X size={20} />
+          </button>
+          <img
+            src={lightboxUrl}
+            alt="Screenshot"
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-full max-h-[90vh] rounded-xl object-contain shadow-2xl"
+          />
+        </div>
+      )}
     </>
   );
 }
