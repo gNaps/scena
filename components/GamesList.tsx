@@ -89,8 +89,8 @@ export default function GamesList({ locale }: { locale: string }) {
   return (
     <div>
       {/* Search + filters */}
-      <div className="flex flex-wrap items-center gap-3 mb-8">
-        <div className="relative flex-1 min-w-[200px] max-w-sm">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 mb-8">
+        <div className="relative w-full sm:flex-1 sm:min-w-[200px] sm:max-w-sm">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
           <input
             type="text"
@@ -100,9 +100,11 @@ export default function GamesList({ locale }: { locale: string }) {
             className="w-full bg-surface border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary/50 transition-colors"
           />
         </div>
-        <MultiSelectDropdown label={tr.games.filter_status} options={statusOptions} selected={statusIds} onChange={setStatusIds} />
-        <MultiSelectDropdown label={tr.games.filter_genre} options={genreOptions} selected={genreIds} onChange={setGenreIds} />
-        <MultiSelectDropdown label={tr.games.filter_studio} options={studioOptions} selected={studioIds} onChange={setStudioIds} />
+        <div className="flex flex-wrap gap-3">
+          <MultiSelectDropdown label={tr.games.filter_status} options={statusOptions} selected={statusIds} onChange={setStatusIds} />
+          <MultiSelectDropdown label={tr.games.filter_genre} options={genreOptions} selected={genreIds} onChange={setGenreIds} />
+          <MultiSelectDropdown label={tr.games.filter_studio} options={studioOptions} selected={studioIds} onChange={setStudioIds} />
+        </div>
       </div>
 
       {/* Grid */}

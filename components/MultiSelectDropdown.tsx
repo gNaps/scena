@@ -62,7 +62,7 @@ export default function MultiSelectDropdown({ label, options, selected, onChange
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-2 z-50 min-w-[180px] rounded-xl border border-white/10 bg-surface shadow-xl overflow-y-auto max-h-64">
+        <div className="absolute top-full right-0 mt-2 z-50 min-w-[180px] rounded-xl border border-white/10 bg-surface shadow-xl overflow-y-auto max-h-64">
           {options.length === 0 ? (
             <p className="text-xs text-muted px-3 py-2">Nessuna opzione</p>
           ) : (

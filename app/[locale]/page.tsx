@@ -36,7 +36,7 @@ export default async function Home({
             </span>
             .
           </p>
-          <p className="relative text-base md:text-lg text-muted/70 mb-12 max-w-lg">
+          <p className="relative text-base md:text-lg text-muted/90 mb-12 max-w-lg">
             {tr.hero.sub}
           </p>
           <div className="relative flex flex-col sm:flex-row gap-3">

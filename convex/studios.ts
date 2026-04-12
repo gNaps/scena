@@ -1,7 +1,7 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { Doc } from "./_generated/dataModel";
-import { QueryCtx, query } from "./_generated/server";
+import { QueryCtx, mutation, query } from "./_generated/server";
 
 async function enrichStudio(ctx: QueryCtx, studio: Doc<"studios">) {
   const logoUrl = studio.logo
@@ -82,5 +82,12 @@ export const findOne = query({
     const studio = await ctx.db.get(args.id);
     if (!studio) return null;
     return enrichStudio(ctx, studio);
+  },
+});
+
+export const generateUploadUrl = mutation({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.storage.generateUploadUrl();
   },
 });

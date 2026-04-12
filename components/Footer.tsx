@@ -7,17 +7,20 @@ export default function Footer() {
         <p>
           &copy; {new Date().getFullYear()}{" "}
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent font-semibold">
-            SCENE
+            SCENA
           </span>
           . Tutti i diritti riservati.
         </p>
         <nav className="flex gap-6">
-          <Link href="/privacy" className="hover:text-foreground transition-colors">
+          <Link
+            href="/privacy"
+            className="hover:text-foreground transition-colors"
+          >
             Privacy Policy
           </Link>
-          <Link href="/cookie" className="hover:text-foreground transition-colors">
+          {/* <Link href="/cookie" className="hover:text-foreground transition-colors">
             Cookie Policy
-          </Link>
+          </Link> */}
         </nav>
       </div>
     </footer>

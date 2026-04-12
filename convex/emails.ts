@@ -190,3 +190,111 @@ export const sendGameSubmission = action({
     return { success: true };
   },
 });
+
+export const sendStudioSubmission = action({
+  args: {
+    name: v.string(),
+    description: v.array(v.object({ code: v.string(), value: v.string() })),
+    email: v.string(),
+    location: v.string(),
+    urlWebsite: v.optional(v.string()),
+    urlInstagram: v.optional(v.string()),
+    urlLinkedin: v.optional(v.string()),
+    urlOther: v.optional(
+      v.array(v.object({ label: v.string(), url: v.string() })),
+    ),
+    logoStorageId: v.optional(v.id("_storage")),
+    submitterEmail: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const apiKey = process.env.RESEND_API_KEY;
+    const fromEmail = process.env.RESEND_FROM_EMAIL;
+    const toEmail = process.env.RESEND_TO_EMAIL;
+
+    if (!apiKey) throw new Error("RESEND_API_KEY not configured");
+
+    const logoUrl = args.logoStorageId
+      ? await ctx.storage.getUrl(args.logoStorageId)
+      : null;
+
+    const socialLinks = [
+      { label: "Sito web", url: args.urlWebsite },
+      { label: "Instagram", url: args.urlInstagram },
+      { label: "LinkedIn", url: args.urlLinkedin },
+    ]
+      .filter((l) => l.url)
+      .map(
+        (l) =>
+          `<a href="${l.url}" style="color:#8b5cf6;margin-right:12px">${l.label}</a>`,
+      )
+      .join("");
+
+    const otherLinks = (args.urlOther ?? [])
+      .map(
+        (l) =>
+          `<a href="${l.url}" style="color:#8b5cf6;margin-right:12px">${l.label}</a>`,
+      )
+      .join("");
+
+    const html = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" /></head>
+<body style="font-family:sans-serif;background:#07070f;color:#ede9fe;padding:32px;max-width:700px;margin:0 auto">
+  <h1 style="color:#8b5cf6;margin-bottom:4px">Nuova submission studio</h1>
+  <p style="color:#6b7280;margin-top:0">Inviata tramite il form di Scena</p>
+
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+    <tr><td style="padding:8px;color:#6b7280;width:160px">Nome</td><td style="padding:8px;font-weight:700;font-size:18px">${args.name}</td></tr>
+    <tr><td style="padding:8px;color:#6b7280">Email</td><td style="padding:8px">${args.email}</td></tr>
+    <tr><td style="padding:8px;color:#6b7280">Città</td><td style="padding:8px">${args.location}</td></tr>
+    ${args.submitterEmail ? `<tr><td style="padding:8px;color:#6b7280">Email mittente</td><td style="padding:8px">${args.submitterEmail}</td></tr>` : ""}
+  </table>
+
+  <h2 style="color:#8b5cf6;font-size:14px;text-transform:uppercase;letter-spacing:1px">Descrizione</h2>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">${args.description.map((d) => `<tr><td style="padding:4px 8px;font-weight:600;text-transform:uppercase;color:#8b5cf6;width:60px">${d.code}</td><td style="padding:4px 8px;white-space:pre-wrap">${d.value || "—"}</td></tr>`).join("")}</table>
+
+  ${
+    socialLinks || otherLinks
+      ? `
+  <h2 style="color:#8b5cf6;font-size:14px;text-transform:uppercase;letter-spacing:1px">Link</h2>
+  <p style="margin-bottom:24px">${socialLinks}${otherLinks}</p>
+  `
+      : ""
+  }
+
+  ${
+    logoUrl
+      ? `
+  <h2 style="color:#8b5cf6;font-size:14px;text-transform:uppercase;letter-spacing:1px">Logo</h2>
+  <img src="${logoUrl}" style="max-width:300px;border-radius:8px;margin-bottom:24px" />
+  `
+      : ""
+  }
+
+  <p style="color:#6b7280;font-size:12px;margin-top:32px">Scena — ${new Date().toLocaleString("it-IT")}</p>
+</body>
+</html>`;
+
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: `Scena <${fromEmail}>`,
+        to: [toEmail],
+        subject: `[Scena] Nuova submission studio: ${args.name}`,
+        html,
+      }),
+    });
+
+    if (!response.ok) {
+      const body = await response.text();
+      throw new Error(`Sender API error ${response.status}: ${body}`);
+    }
+
+    return { success: true };
+  },
+});

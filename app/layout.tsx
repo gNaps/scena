@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Scena",
-  description: "Videogiochi e studi",
+  description: "Videogiochi e studi italiani",
 };
 
 export default function RootLayout({
