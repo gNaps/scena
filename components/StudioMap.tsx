@@ -33,13 +33,10 @@ function ClusterLayer({
 
     const pinIcon = L.divIcon({
       className: "",
-      html: `<div style="
-        width:14px;height:14px;
-        background:linear-gradient(135deg,#8b5cf6,#22d3ee);
-        border-radius:50%;
-        border:2px solid rgba(255,255,255,0.3);
-        box-shadow:0 0 8px rgba(139,92,246,0.8);
-      "></div>`,
+      html: `<div style="position:relative;width:14px;height:14px;">
+        <div style="position:absolute;inset:0;border-radius:50%;background:#C6FF3A;opacity:.25;animation:ping 2.4s cubic-bezier(0,0,.2,1) infinite;"></div>
+        <div style="position:absolute;inset:3px;border-radius:50%;background:#C6FF3A;box-shadow:0 0 8px rgba(198,255,58,.7);"></div>
+      </div>`,
       iconSize: [14, 14],
       iconAnchor: [7, 7],
     });
@@ -57,11 +54,11 @@ function ClusterLayer({
           html: `<div style="
             display:flex;align-items:center;justify-content:center;
             width:36px;height:36px;
-            background:linear-gradient(135deg,#8b5cf6,#22d3ee);
+            background:#C6FF3A;
             border-radius:50%;
-            border:2px solid rgba(255,255,255,0.25);
-            box-shadow:0 0 16px rgba(139,92,246,0.6);
-            color:white;font-size:13px;font-weight:700;font-family:sans-serif;
+            border:2px solid rgba(11,11,15,0.25);
+            box-shadow:0 0 16px rgba(198,255,58,.5);
+            color:#0B0B0F;font-size:13px;font-weight:700;font-family:var(--font-jetbrains),monospace;
           ">${count}+</div>`,
           iconSize: [36, 36],
           iconAnchor: [18, 18],
@@ -75,18 +72,18 @@ function ClusterLayer({
         { icon: pinIcon },
       );
       const logoHtml = studio.logoUrl
-        ? `<img src="${studio.logoUrl}" alt="${studio.name}" style="width:40px;height:40px;border-radius:8px;object-fit:contain;background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);padding:4px;flex-shrink:0;" />`
-        : `<div style="width:40px;height:40px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,rgba(139,92,246,0.4),rgba(34,211,238,0.4));border:1px solid rgba(255,255,255,0.1);"></div>`;
+        ? `<img src="${studio.logoUrl}" alt="${studio.name}" style="width:40px;height:40px;border-radius:2px;object-fit:contain;background:#101015;border:1px solid #1d1d24;padding:4px;flex-shrink:0;" />`
+        : `<div style="width:40px;height:40px;border-radius:2px;flex-shrink:0;background:rgba(198,255,58,0.15);border:1px solid #1d1d24;"></div>`;
       const nameHtml = studio.slug
-        ? `<a href="/studios/${studio.slug}" style="color:#ede9fe;font-size:13px;font-weight:600;line-height:1.3;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${studio.name}</a>`
-        : `<div style="color:#ede9fe;font-size:13px;font-weight:600;line-height:1.3;">${studio.name}</div>`;
+        ? `<a href="/studios/${studio.slug}" style="color:#F4F2EA;font-family:var(--font-bricolage),sans-serif;font-size:16px;font-weight:700;line-height:1.15;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${studio.name}</a>`
+        : `<div style="color:#F4F2EA;font-family:var(--font-bricolage),sans-serif;font-size:16px;font-weight:700;line-height:1.15;">${studio.name}</div>`;
       marker.bindPopup(
         `
-        <div style="display:flex;align-items:center;gap:10px;background:#0d0d1a;border-radius:12px;padding:10px 14px;min-width:170px;border:1px solid rgba(255,255,255,0.08);">
+        <div style="display:flex;align-items:center;gap:11px;background:#14141A;border:1px solid #2b2b33;border-left:3px solid #C6FF3A;border-radius:2px;padding:12px 14px;min-width:180px;font-family:var(--font-jetbrains),monospace;">
           ${logoHtml}
           <div>
             ${nameHtml}
-            <div style="color:#6b7280;font-size:11px;margin-top:3px;">${studio.location}</div>
+            <div style="color:#8A8A93;font-size:11px;margin-top:4px;">${studio.location}</div>
           </div>
         </div>
       `,
@@ -114,7 +111,7 @@ export default function StudioMap({ locale }: { locale: string }) {
       minZoom={5}
       maxZoom={14}
       scrollWheelZoom
-      style={{ height: "100%", width: "100%", background: "#07070f" }}
+      style={{ height: "100%", width: "100%", background: "#0B0B0F" }}
     >
       <TileLayer
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'

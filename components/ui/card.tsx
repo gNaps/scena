@@ -7,7 +7,7 @@ export function Card({
 }: React.ComponentProps<"div">) {
   return (
     <div
-      className={`rounded-2xl border border-white/10 bg-surface overflow-hidden ${className}`}
+      className={`rounded-[3px] border border-border bg-surface overflow-hidden ${className}`}
       {...props}
     >
       {children}
@@ -34,7 +34,7 @@ export function CardTitle({
 }: React.ComponentProps<"h3">) {
   return (
     <h3
-      className={`font-semibold text-foreground ${className}`}
+      className={`font-sans font-bold text-text-strong ${className}`}
       {...props}
     >
       {children}
@@ -73,7 +73,7 @@ export function CardFooter({
 }: React.ComponentProps<"div">) {
   return (
     <div
-      className={`px-6 py-4 border-t border-white/10 ${className}`}
+      className={`px-6 py-4 border-t border-border ${className}`}
       {...props}
     >
       {children}

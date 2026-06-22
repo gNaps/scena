@@ -43,16 +43,16 @@ export default function MultiSelectDropdown({ label, options, selected, onChange
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
-        className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-sm transition-colors ${
+        className={`flex items-center gap-2 px-4 py-2.5 rounded-[2px] border font-mono text-[12px] uppercase tracking-[0.04em] transition-colors ${
           selected.length > 0
-            ? "border-primary/50 bg-primary/10 text-foreground"
-            : "border-white/10 bg-surface text-muted hover:border-white/20"
+            ? "border-primary text-foreground"
+            : "border-border-strong bg-transparent text-text-2 hover:border-primary"
         }`}
       >
         <span>{label}</span>
         {selected.length > 0 && (
           <>
-            <span className="flex items-center justify-center w-4 h-4 rounded-full bg-primary text-white text-[10px] font-bold">
+            <span className="flex items-center justify-center w-4 h-4 rounded-full bg-primary text-[#0B0B0F] text-[10px] font-bold">
               {selected.length}
             </span>
             <X size={13} onClick={clear} className="text-muted hover:text-foreground transition-colors" />
@@ -62,9 +62,9 @@ export default function MultiSelectDropdown({ label, options, selected, onChange
       </button>
 
       {open && (
-        <div className="absolute top-full right-0 mt-2 z-50 min-w-[180px] rounded-xl border border-white/10 bg-surface shadow-xl overflow-y-auto max-h-64">
+        <div className="absolute top-full right-0 mt-2 z-50 min-w-[180px] rounded-[2px] border border-border bg-surface shadow-xl overflow-y-auto max-h-64">
           {options.length === 0 ? (
-            <p className="text-xs text-muted px-3 py-2">Nessuna opzione</p>
+            <p className="text-xs text-muted px-3 py-2 font-mono">—</p>
           ) : (
             options.map((opt) => {
               const isSelected = selected.includes(opt.id);
@@ -72,15 +72,15 @@ export default function MultiSelectDropdown({ label, options, selected, onChange
                 <button
                   key={opt.id}
                   onClick={() => toggle(opt.id)}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-left hover:bg-white/5 transition-colors"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 font-mono text-[12px] text-left hover:bg-white/5 transition-colors"
                 >
                   <span
-                    className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 transition-colors ${
-                      isSelected ? "bg-primary border-primary" : "border-white/20"
+                    className={`w-4 h-4 rounded-[2px] flex items-center justify-center border shrink-0 transition-colors ${
+                      isSelected ? "bg-primary border-primary" : "border-border-strong"
                     }`}
                   >
                     {isSelected && (
-                      <svg viewBox="0 0 10 8" className="w-2.5 h-2.5 text-white fill-none stroke-current stroke-2">
+                      <svg viewBox="0 0 10 8" className="w-2.5 h-2.5 text-[#0B0B0F] fill-none stroke-current stroke-2">
                         <polyline points="1,4 4,7 9,1" />
                       </svg>
                     )}

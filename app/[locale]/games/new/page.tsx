@@ -18,12 +18,12 @@ export default async function NewGame({
         src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
         strategy="afterInteractive"
       />
-      <main className="pt-16 max-w-3xl mx-auto px-6 py-20">
-        <div className="mb-10 mt-5">
-          <h1 className="text-3xl font-bold text-foreground">
+      <main className="max-w-3xl mx-auto px-6 sm:px-12 pt-16 pb-24">
+        <div className="mb-10">
+          <h1 className="font-sans font-extrabold text-[40px] sm:text-[52px] leading-[0.96] tracking-[-0.03em] text-text-strong">
             {tr.gameForm.pageTitle}
           </h1>
-          <p className="text-muted mt-2 text-sm">{tr.gameForm.pageSubtitle}</p>
+          <p className="font-mono text-[14px] text-muted mt-3 max-w-xl">{tr.gameForm.pageSubtitle}</p>
         </div>
         <GameForm
           locale={locale}

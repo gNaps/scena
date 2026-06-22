@@ -4,15 +4,16 @@ type Variant = "primary" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
-  primary: "bg-primary text-white hover:opacity-90",
-  outline: "border border-white/20 text-foreground hover:bg-white/10",
-  ghost: "text-foreground hover:bg-white/10",
+  primary: "bg-primary text-[#0B0B0F] hover:bg-accent-hover",
+  outline:
+    "bg-transparent border border-border-strong text-foreground hover:border-primary",
+  ghost: "text-muted hover:text-foreground",
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-6 py-3 text-base",
+  sm: "px-4 py-2.5 text-[12px]",
+  md: "px-5 py-3 text-[12px]",
+  lg: "px-7 py-[15px] text-[13px]",
 };
 
 interface ButtonProps extends React.ComponentProps<"button"> {
@@ -29,7 +30,7 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:opacity-50 disabled:pointer-events-none ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-[2px] font-mono font-bold uppercase tracking-[0.06em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:opacity-50 disabled:pointer-events-none ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
 
   if (asChild && React.isValidElement(children)) {
     return React.cloneElement(children as React.ReactElement<{ className?: string }>, {

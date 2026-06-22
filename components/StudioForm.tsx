@@ -44,20 +44,20 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-foreground/80">{label}</label>
+      <label className="font-mono text-[12px] tracking-[0.04em] text-text-2">{label}</label>
       {children}
-      {hint && <p className="text-xs text-muted">{hint}</p>}
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {hint && <p className="text-xs text-muted font-mono">{hint}</p>}
+      {error && <p className="text-xs text-red-400 font-mono">{error}</p>}
     </div>
   );
 }
 
 const inputClass =
-  "w-full bg-surface-elevated border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-primary/60 transition-colors";
+  "w-full bg-surface-elevated border border-border rounded-[2px] px-3.5 py-2.5 font-mono text-[13px] text-foreground placeholder:text-text-dim focus:outline-none focus:border-primary transition-colors";
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mt-8 mb-4">
+    <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-primary mt-8 mb-4">
       {children}
     </h2>
   );
@@ -153,7 +153,7 @@ export default function StudioForm({
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
-        <h2 className="text-xl font-semibold">{tr.studioForm.successTitle}</h2>
+        <h2 className="font-sans text-xl font-bold text-text-strong">{tr.studioForm.successTitle}</h2>
         <p className="text-muted text-sm text-center max-w-sm">{tr.studioForm.successMessage}</p>
       </div>
     );
@@ -210,7 +210,7 @@ export default function StudioForm({
         <div className="flex items-start gap-4">
           {logoPreview ? (
             <div className="relative">
-              <img src={logoPreview} className="w-40 h-28 object-cover rounded-xl" />
+              <img src={logoPreview} className="w-40 h-28 object-cover rounded-[2px]" />
               <button
                 type="button"
                 onClick={() => { setLogoFile(null); setLogoPreview(null); }}
@@ -220,7 +220,7 @@ export default function StudioForm({
               </button>
             </div>
           ) : (
-            <label className="flex flex-col items-center justify-center w-40 h-28 border border-dashed border-white/20 rounded-xl cursor-pointer hover:border-primary/50 transition-colors bg-surface-elevated">
+            <label className="flex flex-col items-center justify-center w-40 h-28 border border-dashed border-white/20 rounded-[2px] cursor-pointer hover:border-primary/50 transition-colors bg-surface-elevated">
               <Upload size={18} className="text-muted mb-1" />
               <span className="text-xs text-muted">{f.uploadLogo}</span>
               <input type="file" accept="image/*" onChange={handleLogoChange} className="hidden" />
@@ -275,7 +275,7 @@ export default function StudioForm({
       </div>
 
       {submitState === "error" && submitError && (
-        <div className="rounded-xl border border-red-500/30 bg-red-900/20 px-4 py-3 text-sm text-red-300">
+        <div className="rounded-[2px] border border-red-500/30 bg-red-900/20 px-4 py-3 text-sm text-red-300">
           {submitError}
         </div>
       )}
@@ -283,7 +283,7 @@ export default function StudioForm({
       <button
         type="submit"
         disabled={submitState === "loading"}
-        className="w-full md:w-auto self-end px-8 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full md:w-auto self-end px-8 py-[15px] rounded-[2px] bg-primary text-[#0B0B0F] font-mono font-bold text-[13px] uppercase tracking-[0.06em] hover:bg-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {submitState === "loading" ? tr.studioForm.submitting : tr.studioForm.submitButton}
       </button>

@@ -1,16 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #07070f;
-  --foreground: #ede9fe;
-  --surface: #0d0d1a;
-  --surface-elevated: #131326;
-  --border: rgba(255, 255, 255, 0.07);
-  --primary: #8b5cf6;
-  --primary-glow: rgba(139, 92, 246, 0.4);
-  --secondary: #22d3ee;
-  --secondary-glow: rgba(34, 211, 238, 0.4);
-  --muted: #6b7280;
+  --background: #0b0b0f;
+  --foreground: #edebe3;
+  --surface: #14141a;
+  --surface-elevated: #0d0d12;
+  --border: #1d1d24;
+  --border-soft: #1b1b22;
+  --border-strong: #34343d;
+  --primary: #c6ff3a;
+  --primary-glow: rgba(198, 255, 58, 0.4);
+  --accent-hover: #d8ff66;
+  /* secondary aliased to the single lime accent so leftover `to-secondary` usages stay on-brand */
+  --secondary: #c6ff3a;
+  --secondary-glow: rgba(198, 255, 58, 0.4);
+  --muted: #8a8a93;
+  --text-strong: #f4f2ea;
+  --text-2: #a6a6ae;
+  --text-dim: #5f5f68;
 }
 
 @theme inline {
@@ -18,43 +25,52 @@
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-border-strong: var(--border-strong);
   --color-primary: var(--primary);
+  --color-accent-hover: var(--accent-hover);
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-text-strong: var(--text-strong);
+  --color-text-2: var(--text-2);
+  --color-text-dim: var(--text-dim);
+  --font-sans: var(--font-bricolage);
+  --font-mono: var(--font-jetbrains);
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
 }
 
-/* Card border glow on hover */
+::selection {
+  background: #c6ff3a;
+  color: #0b0b0f;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Card border highlight on hover (flat, no glow — matches the new flat aesthetic) */
 .card-glow {
   position: relative;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.card-glow::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, #8b5cf6, #22d3ee);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.card-glow:hover::before {
-  opacity: 1;
+  transition: border-color 0.25s ease;
 }
 .card-glow:hover {
-  box-shadow: 0 0 32px rgba(139, 92, 246, 0.15);
+  border-color: var(--border-strong);
 }
 
 /* Leaflet popup reset */
@@ -70,4 +86,11 @@ body {
 }
 .studio-popup .leaflet-popup-tip-container {
   display: none;
+}
+.studio-popup .leaflet-popup-close-button {
+  color: #8a8a93;
+  padding: 6px 7px 0 0;
+}
+.studio-popup .leaflet-popup-close-button:hover {
+  color: #edebe3;
 }
