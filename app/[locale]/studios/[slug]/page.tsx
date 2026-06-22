@@ -77,18 +77,20 @@ export default function StudioDetailPage({
               ← {tr.studioDetail.backAll}
             </Link>
             <div className="flex items-center gap-4 mt-7 mb-3.5">
-              <span
-                className="w-[54px] h-[54px] rounded-full shrink-0 overflow-hidden flex items-center justify-center"
-                style={{ background: color }}
-              >
-                {studio.logoUrl && (
+              {studio.logoUrl ? (
+                <span className="w-[54px] h-[54px] rounded-full shrink-0 overflow-hidden flex items-center justify-center bg-[#101015] border border-border">
                   <img
                     src={studio.logoUrl}
                     alt={studio.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain p-1.5"
                   />
-                )}
-              </span>
+                </span>
+              ) : (
+                <span
+                  className="w-[54px] h-[54px] rounded-full shrink-0"
+                  style={{ background: color }}
+                />
+              )}
               <div className="font-mono font-medium text-[12px] tracking-[0.14em] uppercase text-foreground flex items-center gap-1.5 capitalize">
                 <MapPin size={13} />
                 {[studio.location, region].filter(Boolean).join(" · ")}

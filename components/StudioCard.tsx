@@ -33,18 +33,20 @@ export default function StudioCard({
       />
 
       <div className="relative flex items-center gap-3">
-        <span
-          className="w-10 h-10 rounded-full shrink-0 overflow-hidden flex items-center justify-center"
-          style={{ background: color }}
-        >
-          {studio.logoUrl && (
+        {studio.logoUrl ? (
+          <span className="w-10 h-10 rounded-full shrink-0 overflow-hidden flex items-center justify-center bg-[#101015] border border-border">
             <img
               src={studio.logoUrl}
               alt={studio.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain p-1"
             />
-          )}
-        </span>
+          </span>
+        ) : (
+          <span
+            className="w-10 h-10 rounded-full shrink-0"
+            style={{ background: color }}
+          />
+        )}
         <span className="min-w-0">
           <span className="block font-sans font-bold text-[20px] leading-tight text-text-strong truncate">
             {studio.name}
